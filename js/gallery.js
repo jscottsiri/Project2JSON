@@ -36,8 +36,7 @@ function swapPhoto() {
     
 	var myElement= document.querySelectorAll("img#slideshow");
     myElement.src;
-    GalleryImage(mJson.images[mCurrentIndex].imgLocation,mJson.images[mCurrentIndex].description,mJson.images[mCurrentIndex].date,mJson.images[mCurrentIndex].imgPath);
-    mCurrentIndex +=1;
+    GalleryImage(mImages[mCurrentIndex].imgLocation,mImages[mCurrentIndex].description,mJson.images[mCurrentIndex].date,mJson.images[mCurrentIndex].imgPath);
 }
 
 // Counter for the mImages array
@@ -47,7 +46,7 @@ var mCurrentIndex = 0;
 var mRequest = new XMLHttpRequest();
 
 // Array holding GalleryImage objects (see below).
-var mImages = [];
+var mImages = mJson.images;
 
 // Holds the retrived JSON information
 var mJson= JSON.parse(mRequest.open("GET", mUrl));
@@ -86,3 +85,26 @@ function GalleryImage(location, description, date, src) {
     this.date=date;
     this.src=src;
 }
+$('#nextPhoto').on('click', () => {
+    mCurrentIndex+=1;
+if (mCurrentIndex > 12){
+        mCurrentIndex= 0;
+}
+    swapPhoto();});
+$('#prevPhoto').on('click', () => {
+    mCurrentIndex-=1;
+    if (mCurrentIndex < 0){
+        mCurrentIndex= 12;
+}
+    swapPhoto();
+});
+$("img.moreIndicator").click(function() {
+    if($(".moreIndicator").hasClass("rot90")){
+        $(".moreIndicator").addClass("rot270");
+        $(".moreIndicator").removeClass("rot90");
+}
+    else if($(".moreIndicator").hasClass("rot270")){
+        $(".moreIndicator").addClass("rot90");
+        $(".moreIndicator").removeClass("rot270");
+}
+});

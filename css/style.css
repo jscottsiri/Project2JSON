@@ -52,11 +52,23 @@ body {
 #prevPhoto {
 	height: 42px;
 	width: 42px;
+	-webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
-
+#prevPhoto:hover{
+	opacity:.8;
+}
+#nextPhoto:hover{
+	opacity:.8;
+}
 #nextPhoto {
 	height: 42px;
 	width: 42px;
+	position: absolute;
+	margin: 0 560px; 
 }
 
 .details p {
@@ -68,9 +80,17 @@ body {
 	margin: 20px 0px;
 }
 
+.moreIndicator{
+	position: absolute;
+    top: 0; bottom:0; left: 0; right:0;
+    margin: auto;
+}
+
 /*Add CSS styles to rotate the element 90deg
 Make it animate nicely. You'll need CSS3 for this*/
-.rot90 {}
+.rot90 {
+transform: scale(2) rotate(90deg) translate(50px);
+}
 
 /*Add CSS styles to rotate the element 180deg
 Make it animate nicely. You'll need CSS3 for this*/
