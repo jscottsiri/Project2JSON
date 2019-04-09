@@ -32,28 +32,39 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
+function getQueryParams(qs) {
+     qs = qs.split("+").join(" ");
+     var params = {},'         tokens,         re = /[?&]?([^=]+)=([^&]*)/g;     while (tokens = re.exec(qs)) {         params[decodeURIComponent(tokens[1])]             = decodeURIComponent(tokens[2]);     }     return params; } var $_GET = getQueryParams(document.location.search);
+ console.log($_GET["json"]); // would output "John"
+
 function swapPhoto() {
-    
-	var myElement= document.querySelectorAll("img#slideshow");
-    myElement.src;
-    GalleryImage(mImages[mCurrentIndex].imgLocation,mImages[mCurrentIndex].description,mJson.images[mCurrentIndex].date,mJson.images[mCurrentIndex].imgPath);
+	//Add code here to access the #slideShow element.
+	//Access the img element and replace its source
+	//with a new image from your images array which is loaded 
+	//from the JSON string
+	console.log('swap photo');
 }
 
 // Counter for the mImages array
 var mCurrentIndex = 0;
-
-// XMLHttpRequest variable
 var mRequest = new XMLHttpRequest();
-
-// Array holding GalleryImage objects (see below).
-var mImages = mJson.images;
-
-// Holds the retrived JSON information
-var mJson= JSON.parse(mRequest.open("GET", mUrl));
+var mImages = [];
+var mUrl= $_Get["json"] != undefined ? $_GET["json"] : 'o,ages.json';
+var mJson;
 
 // URL for the JSON to load by default
 // Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = '../images.json';
+var mUrl = 'images.json';
+
+mRequest.onreadystatechange = function(){
+    if (mRequest.readyState == 4 && mRequest status == 200{
+        try{
+            mJson = JSON.parse(mRequest.responseTest);
+        for (var i = 0; i <  mJson.images.length; i++){
+            mImage.push (new GalleryImage(mJson.images[i].imgLocation, mJson.images[i].description, mJson.images[i].date, mJson.images[i].imgPath);
+
+        }
+}
 
 
 //You can optionally use the following function as your event callback for loading the source of Images from your json data (for HTMLImageObject).
@@ -79,32 +90,8 @@ window.addEventListener('load', function() {
 }, false);
 
 function GalleryImage(location, description, date, src) {
-	//implement me as an object to hold the following data about an image:
-	this.location=location;
-    this.description=description;
-    this.date=date;
-    this.src=src;
+	this.location = location;
+	this.description = description;
+	this.date = date;
+    this.src = src;
 }
-$('#nextPhoto').on('click', () => {
-    mCurrentIndex+=1;
-if (mCurrentIndex > 12){
-        mCurrentIndex= 0;
-}
-    swapPhoto();});
-$('#prevPhoto').on('click', () => {
-    mCurrentIndex-=1;
-    if (mCurrentIndex < 0){
-        mCurrentIndex= 12;
-}
-    swapPhoto();
-});
-$("img.moreIndicator").click(function() {
-    if($(".moreIndicator").hasClass("rot90")){
-        $(".moreIndicator").addClass("rot270");
-        $(".moreIndicator").removeClass("rot90");
-}
-    else if($(".moreIndicator").hasClass("rot270")){
-        $(".moreIndicator").addClass("rot90");
-        $(".moreIndicator").removeClass("rot270");
-}
-});
