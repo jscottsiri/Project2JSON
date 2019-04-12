@@ -1,0 +1,34 @@
+{
+    "images": [
+        {
+            "imgPath": "img/extra/BaratheonSigil.jpg",
+            "imgLocation": "Stormlands",
+            "description": "Own King's Landing and Storm's End. Their words are 'Ours is the fury'.",
+            "date": "Extinct 303AC"
+        },
+        {
+            "imgPath": "img/extra/GreyjoySigil.jpg",
+            "imgLocation": "Iron Islands",
+            "description": "Own the Iron Islands. Their words are 'We do not sow'.",
+            "date": "Not yet Extinct"
+        },
+        {
+            "imgPath": "img/extra/LannisterSigil.jpg",
+            "imgLocation": "Westerlands",
+            "description": "Own Casterly Rock. Their words are 'Hear me roar', but are unofficially 'Lannisters always pay their debts'.",
+            "date": "Not yet Extinct"
+        },
+        {
+            "imgPath": "img/extra/StarkShield.jpg",
+            "imgLocation": "The North",
+            "description": "Own Winterfell. Their words are 'Winter is coming'.",
+            "date": "Not yet Extinct"
+        },
+        {
+            "imgPath": "img/extra/TargShield.jpg",
+            "imgLocation": "King's Landing (Valyria)",
+            "description": "Own King's Landing. Their words are 'Fire and blood'. They originally trace their heritage back from Old Valyria.",
+            "date": "Not yet Extinct"
+        }
+  ]
+}

@@ -32,38 +32,48 @@ function animate() {
 
 /************* DO NOT TOUCH CODE ABOVE THIS LINE ***************/
 
-function getQueryParams(qs) {
-     qs = qs.split("+").join(" ");
-     var params = {},'         tokens,         re = /[?&]?([^=]+)=([^&]*)/g;     while (tokens = re.exec(qs)) {         params[decodeURIComponent(tokens[1])]             = decodeURIComponent(tokens[2]);     }     return params; } var $_GET = getQueryParams(document.location.search);
- console.log($_GET["json"]); // would output "John"
-
+// Changes the src of the #photo img and changes it to the next picture
 function swapPhoto() {
-	//Add code here to access the #slideShow element.
-	//Access the img element and replace its source
-	//with a new image from your images array which is loaded 
-	//from the JSON string
+    document.getElementById("photo").src = (mImages[mCurrentIndex]["img"]);
+	$(document).ready(() => {
+		$(".location").text("Location: " + mImages[mCurrentIndex]["location"]);
+		$(".description").text("Description: " + mImages[mCurrentIndex]["description"]);
+		$(".date").text( "Date: " + mImages[mCurrentIndex]["date"]);
+	});
 	console.log('swap photo');
 }
 
 // Counter for the mImages array
 var mCurrentIndex = 0;
+
+// XMLHttpRequest variable
 var mRequest = new XMLHttpRequest();
+
+// Array holding GalleryImage objects (see below).
 var mImages = [];
-var mUrl= $_Get["json"] != undefined ? $_GET["json"] : 'o,ages.json';
+
+// Holds the retrived JSON information
 var mJson;
 
 // URL for the JSON to load by default
 // Some options for you are: images.json, images.short.json; you will need to create your own extra.json later
-var mUrl = 'images.json';
+var mUrl =  'images.json';
 
-mRequest.onreadystatechange = function(){
-    if (mRequest.readyState == 4 && mRequest status == 200{
-        try{
-            mJson = JSON.parse(mRequest.responseTest);
-        for (var i = 0; i <  mJson.images.length; i++){
-            mImage.push (new GalleryImage(mJson.images[i].imgLocation, mJson.images[i].description, mJson.images[i].date, mJson.images[i].imgPath);
-
-        }
+// Gets data to use from a different json file (if available)
+function getQueryParams(qs) {
+	qs = qs.split("+").join(" ");
+	var params = {},
+		tokens,
+		re = /[?&]?([^=]+)=([^&]*)/g;
+	while (tokens = re.exec(qs)) {
+		params[decodeURIComponent(tokens[1])]
+			= decodeURIComponent(tokens[2]);
+	}
+	return params;
+}
+const newUrl = 'extra.json';
+if(newUrl != undefined){
+	mUrl = newUrl;
 }
 
 
@@ -77,9 +87,33 @@ function makeGalleryImageOnloadCallback(galleryImage) {
 }
 
 $(document).ready( function() {
-	
+
 	// This initially hides the photos' metadata information
 	$('.details').eq(0).hide();
+
+	// Shows/hides the details section
+	$(".moreIndicator").click(() => {
+		$('.details').toggle();
+		$(".moreIndicator").toggleClass("rot90").toggleClass("rot270");
+	});
+
+	// Gets the previous photo in the array
+	$("#prevPhoto").click(() => {
+		mCurrentIndex--;
+		if(mCurrentIndex < 0){
+			mCurrentIndex = mImages.length-1;
+		}
+		swapPhoto();
+	});
+
+	// Gets the next photo in the array
+	$("#nextPhoto").click(() => {
+		mCurrentIndex++;
+		if(mCurrentIndex > mImages.length-1){
+			mCurrentIndex = 0;
+		}
+		swapPhoto();
+	});
 	
 });
 
@@ -89,9 +123,33 @@ window.addEventListener('load', function() {
 
 }, false);
 
-function GalleryImage(location, description, date, src) {
-	this.location = location;
-	this.description = description;
-	this.date = date;
-    this.src = src;
+function GalleryImage(img, location, description, date) {
+    let image = {
+        "img": img,
+        "location": location,
+        "description": description,
+        "date": date
+    }
+
+    mImages.push(image);
 }
+
+// Gets the images from the folder and creates a GalleryImage object from it
+function reqListener () {
+	try{
+		mJson = JSON.parse(this.responseText);
+	}
+	catch {
+		mRequest.addEventListener("load", reqListener);
+		mRequest.open("GET", "images.json");
+		mRequest.send();
+	}
+
+	mJson["images"].forEach((image) => {
+		GalleryImage(image["imgPath"], image["imgLocation"], image["description"], image["date"]);
+	});
+}
+
+mRequest.addEventListener("load", reqListener);
+mRequest.open("GET", mUrl);
+mRequest.send();

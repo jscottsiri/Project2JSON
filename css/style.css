@@ -13,7 +13,6 @@ body {
 	background-color: white;
 	border-radius: 2px;
 }	
-
 #slideShow {	
 	position: relative;
 }
@@ -30,12 +29,13 @@ body {
 	position: absolute;
 	z-index: 3;
 	opacity: .8;
-	top: 0px;
 }
 
 .thumbnail {
 	position: relative;
 	box-shadow: 1px 3px 20px 0px;
+	height: auto;
+	width: 32em;
 }
 
 
